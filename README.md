@@ -4,7 +4,7 @@ Aplicación fullstack para gestionar empleados y departamentos de una empresa, o
 
 ## Captura de pantalla
 
-![Vista del frontend](./docs/screenshot.png)
+![Vista del frontend](./docs/image.png)
 
 ---
 
