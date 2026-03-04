@@ -20,14 +20,14 @@ CREATE TABLE IF NOT EXISTS employees (
 
 -- Insertar datos de prueba
 INSERT INTO departments (name, code, budget, is_active, max_employees) VALUES
-('Recursos Humanos', 'HR001', 50000.00, true, 10),
-('Tecnología', 'IT002', 150000.00, true, 50),
-('Ventas', 'SL003', 75000.00, true, 20);
+('Recursos Humanos', 'HR001', 50000000.00, true, 10),
+('Tecnología', 'IT002', 150000000.00, true, 50),
+('Ventas', 'SL003', 75000000.00, true, 20);
 
 INSERT INTO employees (department_id, first_name, last_name, hire_date, is_manager, salary) VALUES
-(1, 'Ana', 'García', '2023-01-15', true, 5000.00),
-(1, 'Luis', 'Pérez', '2023-05-20', false, 3000.00),
-(2, 'Carlos', 'López', '2022-11-01', true, 8000.00),
-(2, 'María', 'Rodríguez', '2023-02-10', false, 4500.00),
-(2, 'Jorge', 'Martínez', '2023-08-05', false, 4200.00),
-(3, 'Laura', 'Sánchez', '2024-01-10', true, 6000.00);
+(1, 'Ana', 'García', '2023-01-15', true, 5000000.00),
+(1, 'Luis', 'Pérez', '2023-05-20', false, 3000000.00),
+(2, 'Carlos', 'López', '2022-11-01', true, 8000000.00),
+(2, 'María', 'Rodríguez', '2023-02-10', false, 4500000.00),
+(2, 'Jorge', 'Martínez', '2023-08-05', false, 4200000.00),
+(3, 'Laura', 'Sánchez', '2024-01-10', true, 6000000.00);

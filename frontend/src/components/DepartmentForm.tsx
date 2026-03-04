@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { Department } from '@/types';
+import { useCurrencyInput } from '@/hooks/useCurrencyInput';
 
 interface Props {
     department?: Department | null;
@@ -16,6 +17,8 @@ export const DepartmentForm = ({ department, onSubmit, onCancel }: Props) => {
         is_active: true,
     });
 
+    const budget = useCurrencyInput();
+
     useEffect(() => {
         if (department) {
             setFormData({
@@ -25,6 +28,7 @@ export const DepartmentForm = ({ department, onSubmit, onCancel }: Props) => {
                 max_employees: department.max_employees.toString(),
                 is_active: department.is_active,
             });
+            budget.setValue(department.budget);
         }
     }, [department]);
 
@@ -32,7 +36,7 @@ export const DepartmentForm = ({ department, onSubmit, onCancel }: Props) => {
         e.preventDefault();
         onSubmit({
             ...formData,
-            budget: formData.budget,
+            budget: budget.rawValue,
             max_employees: Number.parseInt(formData.max_employees, 10),
         });
     };
@@ -73,13 +77,13 @@ export const DepartmentForm = ({ department, onSubmit, onCancel }: Props) => {
                     </label>
                     <input
                         id="dept-budget"
-                        type="number"
-                        step="0.01"
+                        type="text"
+                        inputMode="numeric"
                         required
-                        value={formData.budget}
-                        onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                        value={budget.displayValue}
+                        onChange={budget.onChange}
                         className="glass-input"
-                        placeholder="50000.00"
+                        placeholder="$ 50.000.000"
                     />
                 </div>
                 <div className="flex-1 flex flex-col gap-1.5">

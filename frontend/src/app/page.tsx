@@ -175,7 +175,7 @@ export default function HomePage() {
             <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
               Enterprise Dashboard
             </h1>
-            <p className="text-xs text-slate-400">Gestion de recursos corporativos en tiempo real</p>
+            <p className="text-xs text-slate-400">Gestion de recursos corporativos</p>
           </div>
         </div>
       </header>

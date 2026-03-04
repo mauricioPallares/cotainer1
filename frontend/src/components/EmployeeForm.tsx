@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { Employee, Department } from '@/types';
+import { useCurrencyInput } from '@/hooks/useCurrencyInput';
 
 interface Props {
     employee?: Employee | null;
@@ -13,10 +14,11 @@ export const EmployeeForm = ({ employee, departments, onSubmit, onCancel }: Prop
         first_name: '',
         last_name: '',
         department_id: '',
-        salary: '',
         hire_date: new Date().toISOString().split('T')[0],
         is_manager: false,
     });
+
+    const salary = useCurrencyInput();
 
     useEffect(() => {
         if (employee) {
@@ -24,10 +26,10 @@ export const EmployeeForm = ({ employee, departments, onSubmit, onCancel }: Prop
                 first_name: employee.first_name,
                 last_name: employee.last_name,
                 department_id: employee.department_id.toString(),
-                salary: employee.salary,
                 hire_date: employee.hire_date.substring(0, 10),
                 is_manager: employee.is_manager,
             });
+            salary.setValue(employee.salary);
         } else if (departments.length > 0) {
             setFormData((prev) => ({ ...prev, department_id: departments[0].id.toString() }));
         }
@@ -38,7 +40,7 @@ export const EmployeeForm = ({ employee, departments, onSubmit, onCancel }: Prop
         onSubmit({
             ...formData,
             department_id: Number.parseInt(formData.department_id, 10),
-            salary: formData.salary,
+            salary: salary.rawValue,
         });
     };
 
@@ -99,13 +101,13 @@ export const EmployeeForm = ({ employee, departments, onSubmit, onCancel }: Prop
                     </label>
                     <input
                         id="emp-salary"
-                        type="number"
-                        step="0.01"
+                        type="text"
+                        inputMode="numeric"
                         required
-                        value={formData.salary}
-                        onChange={(e) => setFormData({ ...formData, salary: e.target.value })}
+                        value={salary.displayValue}
+                        onChange={salary.onChange}
                         className="glass-input"
-                        placeholder="3500.00"
+                        placeholder="$ 3.500.000"
                     />
                 </div>
                 <div className="flex-1 flex flex-col gap-1.5">
