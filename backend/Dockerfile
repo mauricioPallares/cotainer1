@@ -1,15 +1,22 @@
-FROM node:20-alpine
+# Etapa 1: compilar TypeScript
+FROM node:20-alpine AS builder
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm ci --frozen-lockfile
+COPY . .
+RUN npm run build
 
+# Etapa 2: imagen final solo con dependencias de produccion
+FROM node:20-alpine AS runner
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+RUN npm ci --frozen-lockfile --omit=dev && npm cache clean --force
 
-RUN npm install
+COPY --from=builder /usr/src/app/dist ./dist
 
-COPY . .
-
-RUN npm run build
+ENV NODE_ENV=production
+ENV PORT=3000
 
 EXPOSE 3000
-
-CMD ["npm", "start"]
+CMD ["node", "dist/index.js"]

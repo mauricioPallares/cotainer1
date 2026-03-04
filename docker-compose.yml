@@ -12,6 +12,7 @@ services:
       - "5433:5432"
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
 
   backend:
@@ -28,10 +29,6 @@ services:
       PORT: 3000
     ports:
       - "3000:3000"
-    command: npm run dev
-    volumes:
-      - ./backend:/usr/src/app
-      - /usr/src/app/node_modules
     depends_on:
       - db
     restart: unless-stopped
@@ -46,10 +43,9 @@ services:
       PORT: 3001
     ports:
       - "3001:3001"
-    volumes:
-      - ./frontend:/usr/src/app
-      - /usr/src/app/node_modules
-    command: sh -c "npm install && npm run dev"
     depends_on:
       - backend
     restart: unless-stopped
+
+volumes:
+  postgres_data:
